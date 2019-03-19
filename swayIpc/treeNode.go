@@ -15,7 +15,7 @@ type TreeNode struct {
 	WindowRect         Rect        `json:"window_rect"`
 	DecoRect           Rect        `json:"deco_rect"`
 	Geometry           Rect        `json:"geometry"`
-	Window             interface{} `json:"window"` // null in wayland
+	Window             interface{} `json:"window"`
 	Urgent             bool        `json:"urgent"`
 	Focused            bool        `json:"focused"`
 	Focus              []int       `json:"focus"`

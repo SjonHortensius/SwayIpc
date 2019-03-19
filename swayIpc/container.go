@@ -3,6 +3,8 @@ package swayIpc
 type Container struct {
 	TreeNode
 
-	WindowProperties WindowProperties `json:"window_properties"`
-	Pid              uint64           `json:"pid"`
+	Nodes            []Container         `json:"nodes"`
+	FloatingNodes    []ContainerFloating `json:"floating_nodes"`
+	WindowProperties WindowProperties    `json:"window_properties"`
+	Pid              uint64              `json:"pid"`
 }

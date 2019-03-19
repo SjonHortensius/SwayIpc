@@ -8,6 +8,14 @@ import (
 	"os/exec"
 )
 
+func iterate(n swayIpc.Container, prefix string) {
+	fmt.Printf("%s* %s: [name:%s layout:%s]\n", prefix, n.Type, n.Name, n.Layout)
+
+	for _, m := range n.Nodes {
+		iterate(m, prefix+"\t")
+	}
+}
+
 func main() {
 	var root swayIpc.Root
 
@@ -45,14 +53,16 @@ func main() {
 	fmt.Printf("* %s [width:%d height:%d]\n", root.Type, root.Rect.Width, root.Rect.Height)
 	for _, o := range root.Nodes {
 		fmt.Printf("\t* %s: [make:%s model:%s]\n", o.Type, o.Make, o.Model)
+
 		for _, w := range o.Nodes {
-			fmt.Printf("\t\t* %s: [name:%s representation:%s]\n", w.Type, w.Name, w.Representation)
+			fmt.Printf("\t\t* %s: [name:%s layout:%s]\n", w.Type, w.Name, w.Layout)
+
 			for _, fc := range w.FloatingNodes {
-				fmt.Printf("\t\t\t* %s: [name:%s pid:%d]\n", fc.Type, fc.Name, fc.Pid)
+				iterate(swayIpc.Container(fc), "\t\t\t")
 			}
 
 			for _, c := range w.Nodes {
-				fmt.Printf("\t\t\t* %s: [name:%s pid:%d]\n", c.Type, c.Name, c.Pid)
+				iterate(swayIpc.Container(c), "\t\t\t")
 			}
 		}
 	}
